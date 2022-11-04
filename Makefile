@@ -1,5 +1,5 @@
 CONTAINER_NAME=example-python
-DOCKER_REGISTRY_URL=de.icr.io/example
+DOCKER_REGISTRY_URL=de.icr.io/knowledge-example
 CONTAINER_VERSION:=$(shell git describe --always --tags)
 
 help:                      ## Show this help.
@@ -23,11 +23,7 @@ release-major:             ## Tag the release as a major release and push tag to
 	$(MAKE) docker-build
 	$(MAKE) docker-publish
 
-maven-package:
-	mvn -f ./pom.xml clean package
-
 docker-build:              ## Build the docker container.
-	$(MAKE) maven-package
 	docker build -t $(CONTAINER_NAME):$(CONTAINER_VERSION) .
 
 docker-publish:            ## Publish the docker image to registry using existing version.
