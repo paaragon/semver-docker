@@ -1,22 +1,25 @@
-CONTAINER_NAME=assiss-ms-orch
-DOCKER_REGISTRY_URL=de.icr.io/assisseed
+CONTAINER_NAME=example-python
+DOCKER_REGISTRY_URL=de.icr.io/example
 CONTAINER_VERSION:=$(shell git describe --always --tags)
 
 help:                      ## Show this help.
 	@grep -h "##" $(MAKEFILE_LIST) | grep -v grep | tr -d '##' | tr -d '$$'
 
+init-semver:               ## Tag de current commit to a valid semantic version (0.0.0)
+	git tag 0.0.0 -m "first semver tag"
+
 release-patch:             ## Tag the release as a patch release and push tag to git.
-	./semver $(VERSION_FILE) release-patch
+	./semver release-patch
 	$(MAKE) docker-build
 	$(MAKE) docker-publish
 
 release-minor:             ## Tag the release as a minor  releaseand push tag to git.
-	./semver $(VERSION_FILE) release-minor
+	./semver release-minor
 	$(MAKE) docker-build
 	$(MAKE) docker-publish
 
 release-major:             ## Tag the release as a major release and push tag to git.
-	./semver $(VERSION_FILE) release-major
+	./semver release-major
 	$(MAKE) docker-build
 	$(MAKE) docker-publish
 
