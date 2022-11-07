@@ -6,6 +6,7 @@ RELEASE_PATCH="release-patch"
 RELEASE_MINOR="release-minor"
 RELEASE_MAJOR="release-major"
 GET_GIT_VERSION="get-git-version"
+CHECK_CLEAN="check-clean"
 
 DESCRIBE=$(git describe --always --tags)
 
@@ -33,6 +34,15 @@ echo "Current version: ${version_major}.${version_minor}.${version_patch}"
 if [ ${1} = ${GET_GIT_VERSION} ];
 then
   exit 0
+elif [ ${1} = ${CHECK_CLEAN} ];
+  if [ -z "$(git status --porcelain)" ]; then 
+    echo "Git repository is clean"
+    exit 0
+  else 
+    echo "Git repository not clean. Commit your changes"
+    exit 1
+  fi
+then
 elif [ ${1} = ${RELEASE_PATCH} ];
 then
   let "version_patch=version_patch+1"
@@ -45,13 +55,6 @@ then
   version_patch=0
   version_minor=0
   let "version_major=version_major+1"
-fi
-
-if [ -z "$(git status --porcelain)" ]; then 
-  echo "Git repository is clean"
-else 
-  echo "Git repository not clean. Commit your changes"
-  exit 1
 fi
 
 printf "New version: "
