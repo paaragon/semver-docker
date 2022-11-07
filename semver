@@ -31,9 +31,8 @@ version_major=$MAJOR
 echo "Current version: ${version_major}.${version_minor}.${version_patch}"
 
 if [ ${1} = ${GET_GIT_VERSION} ];
-  exit 0
 then
-  echo 
+  exit 0
 elif [ ${1} = ${RELEASE_PATCH} ];
 then
   let "version_patch=version_patch+1"
