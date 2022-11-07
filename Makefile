@@ -13,15 +13,15 @@ version:                   ## Check the current project version.
 
 patch:                     ## Tag changes increasing the patch position.
 	./semver check-clean
-	./semver release-patch
+	./semver patch
 
 minor:                     ## Tag changes increasing the minor position.
 	./semver check-clean
-	./semver release-minor
+	./semver minor
 
 major:                     ## Tag changes increasing the major position.
 	./semver check-clean
-	./semver release-major
+	./semver major
 
 release-patch:             ## Tag changes increasing the patch position and release the project.
 	$(MAKE) patch
