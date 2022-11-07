@@ -9,16 +9,11 @@ GET_GIT_VERSION="get-git-version"
 
 DESCRIBE=$(git describe --always --tags)
 
-PATCH=$(echo ${DESCRIBE} | grep -Eo "[0-9]+$")
-MINOR=$(echo ${DESCRIBE} | grep -Eo "[0-9]+\.[0-9]+$" | grep -Eo "^[0-9]+")
-MAJOR=$(echo ${DESCRIBE} | grep -Eo ""^[0-9]+"")
+VARSION=$(echo ${DESCRIBE} | grep -Eo ""^[0-9]\.[0-9]\.[0-9]"")
 
-if [ -z "$(git status --porcelain)" ]; then 
-  echo "Git repository is clean"
-else 
-  echo "Git repository not clean. Commit your changes"
-  exit 1
-fi
+MAJOR=$(echo ${VARSION} | grep -Eo ""^[0-9]+"")
+MINOR=$(echo ${VARSION} | grep -Eo "[0-9]+\.[0-9]+$" | grep -Eo "^[0-9]+")
+PATCH=$(echo ${VARSION} | grep -Eo "[0-9]+$")
 
 # Command line arguments.
 if [ ${#} -lt 1 ];
@@ -29,14 +24,16 @@ fi
 
 git pull
 
-version_patch=$PATCH # $(cat VERSION | grep -Eo "[0-9]+$")
-version_minor=$MINOR # $(cat VERSION | grep -Eo "[0-9]+\.[0-9]+$" | grep -Eo "^[0-9]+")
-version_major=$MAJOR # $(cat VERSION | grep -Eo "^[0-9]+")
+version_patch=$PATCH
+version_minor=$MINOR
+version_major=$MAJOR
 
-echo "Existing version: ${version_major}.${version_minor}.${version_patch}"
+echo "Current version: ${version_major}.${version_minor}.${version_patch}"
 
-if [ ${1} = ${RELEASE_PATCH} ];
+if [ ${1} = ${GET_GIT_VERSION} ];
+  exit 0
 then
+  echo 
 elif [ ${1} = ${RELEASE_PATCH} ];
 then
   let "version_patch=version_patch+1"
@@ -50,6 +47,14 @@ then
   version_minor=0
   let "version_major=version_major+1"
 fi
+
+if [ -z "$(git status --porcelain)" ]; then 
+  echo "Git repository is clean"
+else 
+  echo "Git repository not clean. Commit your changes"
+  exit 1
+fi
+
 printf "New version: "
 echo "${version_major}.${version_minor}.${version_patch}"
 
