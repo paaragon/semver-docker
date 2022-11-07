@@ -59,4 +59,5 @@ echo "${version_major}.${version_minor}.${version_patch}"
 
 # Push the version tags to git
 git tag -a "${version_major}.${version_minor}.${version_patch}" -m "${version_major}.${version_minor}.${version_patch}"
-git push origin "${version_major}.${version_minor}.${version_patch}"
+git push
+git push --tags
