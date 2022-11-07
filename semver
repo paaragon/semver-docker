@@ -5,12 +5,20 @@
 RELEASE_PATCH="release-patch"
 RELEASE_MINOR="release-minor"
 RELEASE_MAJOR="release-major"
+GET_GIT_VERSION="get-git-version"
 
 DESCRIBE=$(git describe --always --tags)
 
 PATCH=$(echo ${DESCRIBE} | grep -Eo "[0-9]+$")
 MINOR=$(echo ${DESCRIBE} | grep -Eo "[0-9]+\.[0-9]+$" | grep -Eo "^[0-9]+")
 MAJOR=$(echo ${DESCRIBE} | grep -Eo ""^[0-9]+"")
+
+if [ -z "$(git status --porcelain)" ]; then 
+  echo "Git repository is clean"
+else 
+  echo "Git repository not clean. Commit your changes"
+  exit 1
+fi
 
 # Command line arguments.
 if [ ${#} -lt 1 ];
@@ -28,6 +36,8 @@ version_major=$MAJOR # $(cat VERSION | grep -Eo "^[0-9]+")
 echo "Existing version: ${version_major}.${version_minor}.${version_patch}"
 
 if [ ${1} = ${RELEASE_PATCH} ];
+then
+elif [ ${1} = ${RELEASE_PATCH} ];
 then
   let "version_patch=version_patch+1"
 elif [ ${1} = ${RELEASE_MINOR} ];

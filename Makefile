@@ -8,6 +8,9 @@ help:                      ## Show this help.
 init-semver:               ## Tag de current commit to a valid semantic version (0.0.0)
 	git tag 0.0.0 -m "first semver tag"
 
+git-version:
+	./semver get-git-version
+
 release-patch:             ## Tag the release as a patch release and push tag to git.
 	./semver release-patch
 	$(MAKE) docker-build
