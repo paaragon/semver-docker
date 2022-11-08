@@ -1,6 +1,6 @@
 CONTAINER_NAME=example-python
 DOCKER_REGISTRY_URL=de.icr.io/knowledge-example
-CONTAINER_VERSION:=$(shell git describe --always --tags)
+VERSION:=$(shell ./semver get-git-version)
 
 help:                      ## Show this help.
 	@grep -h "##" $(MAKEFILE_LIST) | grep -v grep | tr -d '##' | tr -d '$$'
@@ -41,8 +41,8 @@ release:                   ## Build the docker image and publish it.
 	$(MAKE) docker-publish
 
 docker-build:              ## Build the docker image.
-	docker build -t $(CONTAINER_NAME):$(CONTAINER_VERSION) .
+	docker build -t $(CONTAINER_NAME):$(VERSION) .
 
 docker-publish:            ## Publish the docker image to registry.
-	docker tag $(CONTAINER_NAME):$(CONTAINER_VERSION) $(DOCKER_REGISTRY_URL)/$(CONTAINER_NAME):$(CONTAINER_VERSION)
-	docker push $(DOCKER_REGISTRY_URL)/$(CONTAINER_NAME):$(CONTAINER_VERSION)
+	docker tag $(CONTAINER_NAME):$(VERSION) $(DOCKER_REGISTRY_URL)/$(CONTAINER_NAME):$(VERSION)
+	docker push $(DOCKER_REGISTRY_URL)/$(CONTAINER_NAME):$(VERSION)
