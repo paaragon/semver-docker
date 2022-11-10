@@ -23,19 +23,19 @@ major:                     ## Tag changes increasing the major position.
 	./semver check-clean
 	./semver major
 
-release-patch:             ## Tag changes increasing the patch position and release the project.
+publish-patch:             ## Tag changes increasing the patch position and publish the project.
 	$(MAKE) patch
-	$(MAKE) release
+	$(MAKE) publish
 
-release-minor:             ## Tag changes increasing the minor position and release the project.
+publish-minor:             ## Tag changes increasing the minor position and publish the project.
 	$(MAKE) minor
-	$(MAKE) release
+	$(MAKE) publish
 
-release-major:             ## Tag changes increasing the major position and release the project.
+publish-major:             ## Tag changes increasing the major position and publish the project.
 	$(MAKE) major
-	$(MAKE) release
+	$(MAKE) publish
 
-release:                   ## Build the docker image and publish it.
+publish:                   ## Build the docker image and publish it.
 	./semver check-clean
 	$(MAKE) docker-build
 	$(MAKE) docker-publish
