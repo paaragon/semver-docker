@@ -10,7 +10,7 @@ CHECK_CLEAN="check-clean"
 
 DESCRIBE=$(git describe --always --tags)
 
-VERSION=$(echo ${DESCRIBE} | grep -Eo ""^[0-9]\.[0-9]\.[0-9]"")
+VERSION=$(echo ${DESCRIBE} | grep -Eo ""[0-9]+\.[0-9]+\.[0-9]+"")
 
 MAJOR=$(echo ${VERSION} | grep -Eo ""^[0-9]+"")
 MINOR=$(echo ${VERSION} | grep -Eo "[0-9]+\.[0-9]+$" | grep -Eo "^[0-9]+")
