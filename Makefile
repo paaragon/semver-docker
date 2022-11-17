@@ -1,5 +1,5 @@
 CONTAINER_NAME=example-python
-DOCKER_REGISTRY_URL=de.icr.io/knowledge-example
+DOCKER_REGISTRY_URL=de.icr.io/knowledge-example2
 VERSION:=$(shell ./semver get-git-version)
 
 help:                      ## Show this help.
